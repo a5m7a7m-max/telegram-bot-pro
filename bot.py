@@ -1,5 +1,5 @@
 import os
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, ContextTypes, filters
 
 TOKEN = os.getenv("BOT_TOKEN")
@@ -12,15 +12,17 @@ SUPPORT = "@Dr_7_Khaled"
 
 users = set()
 
-def menu():
-    return InlineKeyboardMarkup([
-        [InlineKeyboardButton("👑 الباقات VIP", callback_data="plans")],
-        [InlineKeyboardButton("💳 الدفع", callback_data="pay")],
-        [InlineKeyboardButton("📤 إثبات الدفع", callback_data="proof")],
-        [InlineKeyboardButton("📊 النتائج", callback_data="results")],
-        [InlineKeyboardButton("📞 الدعم", callback_data="support")]
-    ])
 
+def menu():
+    keyboard = [
+        ["BOT 125X 🤖", "إحصائيات 📊", "قناة نتائج المشتركين"],
+        ["مجموعة Vip", "قنوات Vip", "طرق الدفع 💳"],
+        ["Forex ⭐", "قناة الوساطة لبيع وشراء usdt"],
+        ["إعلان هام 📢‼️", "قناة الكورسات", "الاستراتيجية"],
+        ["كورسات مجانًا", "أفضل منصة 💎"],
+        ["القناة الرئيسية ❤️‍🔥", "مجانا القناة الخاصة"]
+    ]
+    return ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     users.add(update.effective_user.id)
     await update.message.reply_text(
